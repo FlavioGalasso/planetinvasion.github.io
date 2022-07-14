@@ -35,6 +35,10 @@ class PickUpHandler {
         this.maxPickups = 3.0;
         this.scene = scene;
 
+        this.noPicksTicks = 0.0;
+        this.noPicksTicksMax = 1000.0;
+        this.noPicksTicksVelocity = 5;
+
         this.geometry = new THREE.BoxGeometry( 1.2, 1.2, 1.2 );
         this.ammoMaterial = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( this.ammoTexturePath ), transparent:true } );  
         this.healthMaterial = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( this.healthTexturePath ), transparent: true } );   
@@ -50,6 +54,13 @@ class PickUpHandler {
     }
 
     update(PlayerHandler,clockDelta){
+        this.noPicksTicks += this.noPicksTicksVelocity * clockDelta;
+        if(this.noPicksTicks >= this.noPicksTicksMax){
+            console.log("pickups despawned!")
+            this.reset();
+
+        }
+
         if( this.pickupList.length < this.maxPickups){
             if( Math.random() > this.probabilityOfNotSpawningHealth){
                 var playerPos = PlayerHandler.getPosition();
@@ -69,6 +80,7 @@ class PickUpHandler {
         var PickUp = this.pickupList[i];
         PickUp.update(clockDelta);
         if(PickUp.mesh.pickedUp) {
+            this.noPicksTicks = 0;
             //console.log("hit something");
             PickUp.removeFromScene(this.scene);
             this.pickupList.splice(i, 1);
@@ -79,6 +91,7 @@ class PickUpHandler {
 
 
     reset(){
+        this.noPicksTicks = 0;
         var i = this.pickupList.length;
         while (i--) {   
                 var PickUp = this.pickupList[i];
