@@ -2,7 +2,7 @@ import * as THREE from './libs/three/build/three.module.js';
 import { cloneGltf } from './cloneGltf.js';
 import {calculateYAngleBetweenVectors,calculateDirectionBetweenVectors} from './UsefulFunctions.js'
 
-import {TWEEN} from './libs/tween/src/Tween.js'
+import TWEEN  from './libs/tween/src/Tween.js'
 
 
 class RobotBox{
