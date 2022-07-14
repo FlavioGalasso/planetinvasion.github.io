@@ -36,7 +36,7 @@ class PickUpHandler {
         this.scene = scene;
 
         this.noPicksTicks = 0.0;
-        this.noPicksTicksMax = 1000.0;
+        this.noPicksTicksMax = 200.0;
         this.noPicksTicksVelocity = 5;
 
         this.geometry = new THREE.BoxGeometry( 1.2, 1.2, 1.2 );
